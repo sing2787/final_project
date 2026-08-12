@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ledger — Personal Budget Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+<div class="page">
+ 
+  <!-- Header -->
+  <header class="ledger-header">
+    <div class="stamp">EST. TODAY</div>
+    <h1>Ledger</h1>
+    <p class="tagline">keep the books, know the balance</p>
+  </header>
+ 
+  <!-- Summary strip -->
+  <section class="summary" aria-label="Totals">
+    <div class="summary-cell">
+      <span class="summary-label">Income</span>
+      <span class="summary-value income" id="totalIncome">$0.00</span>
+    </div>
+    <div class="summary-cell">
+      <span class="summary-label">Expenses</span>
+      <span class="summary-value expense" id="totalExpense">$0.00</span>
+    </div>
+    <div class="summary-cell">
+      <span class="summary-label">Balance</span>
+      <span class="summary-value" id="totalBalance">$0.00</span>
+    </div>
+  </section>
+ 
+  <!-- Add transaction -->
+  <section class="ticket" aria-label="Add a transaction">
+    <h2 class="ticket-title">New Entry</h2>
+    <form id="transactionForm">
+      <div class="type-toggle" role="radiogroup" aria-label="Transaction type">
+        <button type="button" class="type-btn active" data-type="expense" id="typeExpense">Expense</button>
+        <button type="button" class="type-btn" data-type="income" id="typeIncome">Income</button>
+      </div>
+ 
+      <div class="field-row">
+        <div class="field">
+          <label for="amount">Amount</label>
+          <div class="amount-input">
+            <span>$</span>
+            <input type="number" id="amount" min="0.01" step="0.01" placeholder="0.00" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category" required></select>
+        </div>
+        <div class="field">
+          <label for="date">Date</label>
+          <input type="date" id="date" required>
+        </div>
+      </div>
+ 
+      <div class="field">
+        <label for="description">Description</label>
+        <input type="text" id="description" placeholder="e.g. Groceries at Trader Joe's" required maxlength="80">
+      </div>
+ 
+      <button type="submit" class="stamp-btn">Add Entry</button>
+    </form>
+  </section>
+ 
+  <!-- Category budgets -->
+  <section class="budgets" aria-label="Category budgets">
+    <h2 class="section-title">Category Budgets <span class="section-sub">(monthly)</span></h2>
+ 
+    <form id="budgetForm" class="budget-form">
+      <select id="budgetCategory" required></select>
+      <div class="amount-input small">
+        <span>$</span>
+        <input type="number" id="budgetAmount" min="0" step="1" placeholder="Limit" required>
+      </div>
+      <button type="submit" class="ghost-btn">Set Limit</button>
+    </form>
+ 
+    <div id="budgetList" class="budget-list"></div>
+  </section>
+ 
+  <!-- Transaction list -->
+  <section class="ledger-list" aria-label="Transactions">
+    <div class="list-header">
+      <h2 class="section-title">Transactions</h2>
+      <div class="controls">
+        <select id="filterCategory">
+          <option value="all">All categories</option>
+        </select>
+        <select id="sortBy">
+          <option value="date-desc">Newest first</option>
+          <option value="date-asc">Oldest first</option>
+          <option value="amount-desc">Amount: high to low</option>
+          <option value="amount-asc">Amount: low to high</option>
+        </select>
+      </div>
+    </div>
+ 
+    <div id="transactionList" class="entries"></div>
+    <p id="emptyState" class="empty-state" hidden>No entries yet. Add your first transaction above.</p>
+  </section>
+ 
+  <footer class="page-footer">
+    <p>Data is stored only in this browser via <code>localStorage</code>. Nothing leaves your device.</p>
+  </footer>
+ 
+</div>
+ 
+<script src="script.js"></script>
+</body>
+</html>
+ 
